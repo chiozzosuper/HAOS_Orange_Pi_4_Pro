@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build.sh fetch - clona HAOS al tag scelto e applica l'overlay Orange Pi 4 Pro.
+
 
 apply_overlay() {
     local be="${OS_DIR}/buildroot-external"
@@ -9,8 +9,8 @@ apply_overlay() {
     log "applico overlay (board xunlong/orangepi-4pro, defconfig, patch kernel)"
     rsync -a "${OVERLAY_DIR}/buildroot-external/" "${be}/"
 
-    # Cartella patch dedicata: tutte le patch HAOS tranne quelle del kernel (scritte per 6.18,
-    # non applicabili al kernel vendor 6.6) piu' le nostre patch kernel.
+    # Cartella patch dedicata: tutte le patch HAOS tranne quelle del kernel 
+    
     local d n
     for d in "${be}"/patches/*/; do
         n="$(basename "${d}")"

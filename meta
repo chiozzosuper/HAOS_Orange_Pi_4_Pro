@@ -1,0 +1,16 @@
+BOARD_ID=orangepi-4pro
+BOARD_NAME="Xunlong Orange Pi 4 Pro"
+CHASSIS=embedded
+BOOTLOADER=uboot
+KERNEL_FILE=Image
+PARTITION_TABLE_TYPE=mbr
+# Il kernel sta nella partizione FAT di boot (il U-Boot vendor 2018.05 non legge squashfs).
+BOOT_SIZE=128M
+# Area riservata prima della prima partizione: boot0 a 8 KiB, boot_package a 16400 KiB.
+BOOT_SPL=true
+BOOT_SPL_SIZE=32M
+BOOT_ENV_SIZE=0x2000
+# kernel.img (squashfs) resta nel layout A/B ma non e' usato per il boot
+KERNEL_SIZE=64M
+SUPERVISOR_MACHINE=qemuarm-64
+SUPERVISOR_ARCH=aarch64

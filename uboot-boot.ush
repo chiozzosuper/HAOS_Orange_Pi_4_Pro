@@ -1,0 +1,66 @@
+# Orange Pi 4 Pro (Allwinner A733) - Home Assistant OS, slot unico.
+# Gira sul U-Boot vendor 2018.05: solo comandi presenti anche negli script Armbian/Orange Pi
+# (load, part, env import, fdt, booti, setenv, test, if/fi). Niente fileenv, niente squashfs.
+#
+# Layout MBR (disk-signature 0x48617373 -> PARTUUID=48617373-NN):
+#   1 boot (FAT: Image, dtb, boot.scr, cmdline.txt)   5 kernel0   6 system0 (erofs, root)
+#   7 kernel1   8 system1   9 bootstate   3 overlay   4 data
+
+# Indirizzi come nello script di Orange Pi/Armbian (quelli di default sono stretti per kernel grandi)
+setenv kernel_addr_r "0x41000000"
+setenv fdt_addr_r "0x4a000000"
+setenv ramdisk_addr_r "0x4b000000"
+setenv load_addr "0x4d000000"
+
+if test -z "${devtype}"; then setenv devtype mmc; fi
+if test -z "${devnum}"; then setenv devnum 0; fi
+echo "HAOS boot script: ${devtype} ${devnum}"
+
+# --- bootstate: lettura sola del MACHINE_ID salvato da HAOS (fw_setenv) ---
+setenv mmc_env
+part start ${devtype} ${devnum} 9 mmc_env
+if test -n "${mmc_env}"; then
+  mmc dev ${devnum}
+  mmc read ${ramdisk_addr_r} ${mmc_env} 0x10
+  env import -c ${ramdisk_addr_r} 0x2000
+fi
+
+# Consente ConditionFirstBoot= al primo avvio
+setenv BOOT_CONDITION
+if test -z "${MACHINE_ID}"; then setenv BOOT_CONDITION "systemd.condition-first-boot=true"; fi
+
+setenv bootargs_haos "zram.enabled=1 zram.num_devices=3 clk_ignore_unused swiotlb=65536 ${BOOT_CONDITION}"
+if test -n "${MACHINE_ID}"; then setenv bootargs_haos "${bootargs_haos} systemd.machine_id=${MACHINE_ID}"; fi
+
+# Slot unico: sempre A
+setenv bootargs_a "root=PARTUUID=48617373-06 rootfstype=erofs ro rootwait rauc.slot=A"
+
+# --- variabili opzionali (haos-config.txt) ed extra argomenti (cmdline.txt: cmdline=...) ---
+setenv cmdline
+if load ${devtype} ${devnum}:1 ${load_addr} haos-config.txt; then
+  env import -t ${load_addr} ${filesize}
+fi
+if load ${devtype} ${devnum}:1 ${load_addr} cmdline.txt; then
+  env import -t ${load_addr} ${filesize}
+fi
+
+# --- kernel e device tree dalla partizione FAT ---
+setenv fdtfile "sun60i-a733-orangepi-4-pro.dtb"
+echo "Loading kernel Image..."
+if load ${devtype} ${devnum}:1 ${kernel_addr_r} Image; then
+  echo "Loading device tree ${fdtfile}..."
+  if load ${devtype} ${devnum}:1 ${fdt_addr_r} ${fdtfile}; then
+    fdt addr ${fdt_addr_r}
+    fdt resize 65536
+
+    setenv bootargs "${bootargs_haos} ${bootargs_a} ${cmdline}"
+    printenv bootargs
+    echo "Starting kernel"
+    booti ${kernel_addr_r} - ${fdt_addr_r}
+    echo "booti failed"
+  else
+    echo "ERRORE: ${fdtfile} non trovato nella partizione 1"
+  fi
+else
+  echo "ERRORE: Image non trovata nella partizione 1"
+fi

@@ -1,12 +1,5 @@
-# Orange Pi 4 Pro (Allwinner A733) - Home Assistant OS, slot unico.
-# Gira sul U-Boot vendor 2018.05: solo comandi presenti anche negli script Armbian/Orange Pi
-# (load, part, env import, fdt, booti, setenv, test, if/fi). Niente fileenv, niente squashfs.
-#
-# Layout MBR (disk-signature 0x48617373 -> PARTUUID=48617373-NN):
-#   1 boot (FAT: Image, dtb, boot.scr, cmdline.txt)   5 kernel0   6 system0 (erofs, root)
-#   7 kernel1   8 system1   9 bootstate   3 overlay   4 data
 
-# Indirizzi come nello script di Orange Pi/Armbian (quelli di default sono stretti per kernel grandi)
+# Indirizzi come nello script di Orange Pi/Armbian
 setenv kernel_addr_r "0x41000000"
 setenv fdt_addr_r "0x4a000000"
 setenv ramdisk_addr_r "0x4b000000"
@@ -16,7 +9,7 @@ if test -z "${devtype}"; then setenv devtype mmc; fi
 if test -z "${devnum}"; then setenv devnum 0; fi
 echo "HAOS boot script: ${devtype} ${devnum}"
 
-# --- bootstate: lettura sola del MACHINE_ID salvato da HAOS (fw_setenv) ---
+# bootstate: lettura sola del MACHINE_ID salvato da HAOS (fw_setenv) ---
 setenv mmc_env
 part start ${devtype} ${devnum} 9 mmc_env
 if test -n "${mmc_env}"; then

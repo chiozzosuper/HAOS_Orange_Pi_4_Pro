@@ -42,3 +42,7 @@ Consequences to keep in mind:
 - `rauc-mark-good.service` may appear failed: expected, without A/B.
 - The 3 HAOS kernel patches for 6.18 (ipv6, vlan, bluetooth) do not apply to 6.6 and are excluded.
 - No built-in Wi-Fi/Bluetooth, GPU, or NPU. USB and Ethernet do work.
+
+
+## Licenses and Provenance ##
+`kernel-sun60iw2-vendor.config` and the patches in `patches-opi4pro/linux/` and `patches/uboot/` come from the Armbian project (GPL-2.0), at the commits indicated in `lib/common.sh`; the rest is an overlay for the `home-assistant/operating-system` repository (Apache-2.0). The `boot0`/`sys_config` blobs are Allwinner/Orange Pi binaries.

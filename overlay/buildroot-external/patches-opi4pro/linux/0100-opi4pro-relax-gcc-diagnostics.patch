@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Subject: [PATCH] opi4pro: do not fail the vendor BSP build on newer GCC diagnostics
+
+Buildroot uses GCC 14, which turns implicit-function-declaration, int-conversion
+and incompatible-pointer-types into hard errors. The Allwinner BSP code predates
+that. Downgrade them so the vendor tree builds.
+---
+diff --git a/Makefile b/Makefile
+index 0e50627..4173c78 100644
+--- a/Makefile
++++ b/Makefile
+@@ -564,6 +564,7 @@ KBUILD_CFLAGS += -funsigned-char
+ KBUILD_CFLAGS += -fno-common
+ KBUILD_CFLAGS += -fno-PIE
+ KBUILD_CFLAGS += -fno-strict-aliasing
++KBUILD_CFLAGS += -Wno-error $(call cc-option,-Wno-implicit-function-declaration) $(call cc-option,-Wno-int-conversion) $(call cc-option,-Wno-incompatible-pointer-types) $(call cc-option,-Wno-return-mismatch)
+ 
+ KBUILD_CPPFLAGS := -D__KERNEL__
+ KBUILD_RUSTFLAGS := $(rust_common_flags) \

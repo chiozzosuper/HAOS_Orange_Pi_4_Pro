@@ -3,7 +3,7 @@
 HAOS image (no VM, no Docker on the board: HAOS's Docker is part of the system), built on an x86_64 Ubuntu PC and flashed to a microSD card.
 
 -Requirements
-- Build PC: Ubuntu 26.04 x86_64, >= 80 GB free space, >= 8 GB RAM.
+- Build PC: Ubuntu/Debrian/WSL, >= 80 GB free space, >= 8 GB RAM.
 - Orange Pi 4 Pro 4 GB, 128 GB microSD
 - Ethernet cable.
 

@@ -1,4 +1,4 @@
--Native Home Assistant OS for Orange Pi 4 Pro (Allwinner A733, 4 GB)
+-Native Home Assistant OS for Orange Pi 4 Pro (Allwinner A733, >4 GB), Technically it should also work with multipleTechnically it should also work with multiple zero 3w and zero 4, which should have the same hardware, but it hasn't been Orange Pi zero 3w and zero 4, which should have the same hardware, but it hasn't been tested 
 
 HAOS image (no VM, no Docker on the board:, built on an x86_64 Ubuntu PC and flashed to a microSD card.
 

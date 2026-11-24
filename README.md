@@ -10,8 +10,8 @@ HAOS image (no VM, no Docker on the board:, built on an x86_64 Ubuntu PC and fla
 
 -Usage
 ```bash
-# in downloaded git repository directory 
-./build.sh deps          # once: packages, docker (on the build PC)
+# in downloaded git repository directory on the build PC
+./build.sh deps          # once: packages, docker 
 ./build.sh all           # fetch + bootloader + build (1-4 hours) + verify
 ./flash.sh work/images/haos_orangepi-4pro-*.img.xz /dev/sdX
 ```

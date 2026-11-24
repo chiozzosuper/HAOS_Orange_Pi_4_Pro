@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
-# Funzioni e costanti condivise. Non eseguire direttamente.
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK="${WORK_DIR:-${ROOT}/work}"
@@ -13,11 +12,11 @@ OVERLAY_DIR="${ROOT}/overlay"
 BOARD_DEFCONFIG="orangepi_4pro"
 BUILDER_IMAGE="haos-builder-opi4pro"
 
-# --- HAOS: tag da compilare (default: ultima stabile verificata; "latest" = ultimo tag N.N) ---
+# --- HAOS: (default: ultima stabile verificata; "latest" = ultimo tag N.N) ---
 HAOS_REPO="https://github.com/home-assistant/operating-system.git"
 HAOS_TAG="${HAOS_TAG:-18.5}"
 
-# --- Bootloader Allwinner sun60iw2 (stessi riferimenti usati da Armbian) ---
+# --- Bootloader Allwinner sun60iw2  ---
 UBOOT_REPO="https://github.com/orangepi-xunlong/u-boot-orangepi.git"
 UBOOT_REF="b791be842935b27268ae3d00e943a9075495f30a"      # branch v2018.05-sun60iw2
 UBOOT_DEFCONFIG="sun60iw2p1_t736_defconfig"
@@ -29,7 +28,7 @@ ARMBIAN_BLOBS_URL="https://raw.githubusercontent.com/armbian/build/${ARMBIAN_REF
 BOOT0_SHA256="9213f1c56ef932930d43b5751e8937bea0e9ae7460ec16187cc1b0dffdb75345"
 SYSCONFIG_SHA256="eb598823d947fa39d0cf2102051b921d10f41b26538103b9fa3a266c6a486a29"
 
-# Offset sulla SD (come Armbian write_uboot_platform)
+# Offset sulla SD 
 BOOT0_OFFSET_KIB=8
 BOOTPKG_OFFSET_KIB=16400
 SPL_AREA_MIB=32

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build.sh fetch - clona HAOS al tag scelto e applica l'overlay Orange Pi 4 Pro.
+# build.sh fetch
 
 apply_overlay() {
     local be="${OS_DIR}/buildroot-external"
@@ -9,8 +9,8 @@ apply_overlay() {
     log "applico overlay (board xunlong/orangepi-4pro, defconfig, patch kernel)"
     rsync -a "${OVERLAY_DIR}/buildroot-external/" "${be}/"
 
-    # Cartella patch dedicata: tutte le patch HAOS tranne quelle del kernel (scritte per 6.18,
-    # non applicabili al kernel vendor 6.6) piu' le nostre patch kernel.
+    # scritte per 6.18, non applicabili al kernel vendor 6.6
+    
     local d n
     for d in "${be}"/patches/*/; do
         n="$(basename "${d}")"
@@ -18,7 +18,7 @@ apply_overlay() {
         ln -sfn "../patches/${n}" "${be}/patches-opi4pro/${n}"
     done
 
-    # hdd-image.sh fissa KERNEL_SIZE=24M: lo rendiamo sovrascrivibile da meta
+    # hdd-image.sh fissa KERNEL_SIZE=24M
     local hdd="${be}/scripts/hdd-image.sh"
     if grep -q '^KERNEL_SIZE=24M$' "${hdd}"; then
         sed -i 's/^KERNEL_SIZE=24M$/KERNEL_SIZE=\${KERNEL_SIZE:-24M}/' "${hdd}"

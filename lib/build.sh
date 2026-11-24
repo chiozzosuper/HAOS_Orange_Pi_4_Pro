@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build.sh build / shell / clean - compila l'immagine HAOS dentro il container di sviluppo ufficiale.
+# build.sh build / shell / clean 
 
 _docker() {
     if docker info >/dev/null 2>&1; then

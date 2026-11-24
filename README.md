@@ -11,7 +11,6 @@ HAOS image (no VM, no Docker on the board: HAOS's Docker is part of the system),
 -Usage
 ```bash
 ./build.sh deps          # once: packages, docker (on the build PC)
-# log out and back in if it added you to the docker group
 ./build.sh all           # fetch + bootloader + build (1-4 hours) + verify
 ./flash.sh work/images/haos_orangepi-4pro-*.img.xz /dev/sdX
 ```

@@ -3,11 +3,10 @@
 #
 # Due modi:
 #   (default)          compila il U-Boot vendor 2018.05 e lo impacchetta con gli strumenti
-#                      Allwinner/Orange Pi (stessa ricetta di Armbian, riferimenti pinnati).
+#                      Allwinner/Orange Pi
 #   --from-image IMG   estrae boot0 + boot_package da un'immagine che sai gia' funzionare
 #                      su questa scheda (Armbian/DietPi/Orange Pi, .img o .img.xz).
-#
-# I blob sono binari vendor (DRAM init, monitor/BL31): non c'e' modo di ricompilarli.
+
 
 _sha_check() { # file sha256
     local got
@@ -42,8 +41,7 @@ _fetch_uboot_src() {
 }
 
 _build_uboot() {
-    # Flag come in Armbian (post_config_uboot_target__sun60iw2_vendor_quirks) + -std=gnu11:
-    # il codice del 2018 non compila con lo standard C23 di GCC 15.
+
     local kcflags="-std=gnu11 -fcommon -Wno-error -Wno-attributes -Wno-array-bounds -Wno-maybe-uninitialized -Wno-stringop-overflow -Wno-implicit-function-declaration -Wno-int-conversion -Wno-incompatible-pointer-types"
     local -a mk=(make -C "${UBOOT_SRC}" ARCH=arm CROSS_COMPILE="${UBOOT_CROSS}" "PWD=${UBOOT_SRC}"
                  "KCFLAGS=${kcflags}" "HOSTCFLAGS=-std=gnu11 -fcommon -O2")

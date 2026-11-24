@@ -1,1 +1,0 @@
-# Variabili U-Boot opzionali, importate da boot.scr (formato chiave=valore)

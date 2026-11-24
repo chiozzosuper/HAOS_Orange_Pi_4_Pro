@@ -1,6 +1,6 @@
 -Native Home Assistant OS for Orange Pi 4 Pro (Allwinner A733, 4 GB)
 
-HAOS image (no VM, no Docker on the board: HAOS's Docker is part of the system), built on an x86_64 Ubuntu PC and flashed to a microSD card.
+HAOS image (no VM, no Docker on the board:, built on an x86_64 Ubuntu PC and flashed to a microSD card.
 
 -Requirements
 - Build PC: Ubuntu/Debrian/WSL, >= 80 GB free space, >= 8 GB RAM.

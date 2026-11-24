@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# build.sh verify - controlla config kernel e immagine prodotta (senza bisogno della scheda).
+# build.sh verify kernel and image
 
-# Simboli senza i quali HAOS non parte o Supervisor/Docker non funzionano.
+
 VERIFY_CRITICAL_Y="EROFS_FS OVERLAY_FS EXT4_FS VFAT_FS SQUASHFS CGROUPS MEMCG NAMESPACES USER_NS NET_NS PID_NS IPC_NS UTS_NS NETFILTER SECCOMP SECURITY SECURITY_APPARMOR AW_MMC AW_UART_NG DEVTMPFS"
 VERIFY_CRITICAL_YM="VETH BRIDGE NF_TABLES AW_STMMAC_ETH STMMAC_ETH"
 

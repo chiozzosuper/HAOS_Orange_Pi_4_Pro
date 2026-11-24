@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# build.sh deps - installa le dipendenze sul PC di build (Ubuntu/Debian x86_64).
-
+# build.sh deps - installa le dipendenze
 cmd_deps() {
     check_x86_64
     [ -r /etc/os-release ] && . /etc/os-release
@@ -12,8 +11,6 @@ cmd_deps() {
     local SUDO=""
     if [ "$(id -u)" -ne 0 ]; then need_cmd sudo; SUDO="sudo"; fi
 
-    # Il tool docker serve solo sul PC di build: HAOS usa un container di sviluppo.
-    # Sull'Orange Pi non verra' installato nulla.
     local pkgs=(
         git curl ca-certificates rsync xz-utils python3 xxd mtools dosfstools fdisk util-linux
         build-essential bison flex libssl-dev bc device-tree-compiler libncurses-dev

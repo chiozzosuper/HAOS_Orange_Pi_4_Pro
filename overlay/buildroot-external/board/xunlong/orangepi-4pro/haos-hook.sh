@@ -1,9 +1,6 @@
 #!/bin/bash
 # shellcheck disable=SC2155
 
-# Hook HAOS per Orange Pi 4 Pro. Chiamato da scripts/post-image.sh.
-# I blob del bootloader (boot0_sdcard.fex, boot_package.fex) arrivano da `build.sh bootloader`
-# e sono montati nel container in /blobs (sudo ripulisce l'ambiente: non si puo' passare una variabile).
 
 function haos_pre_image() {
     local BOOT_DATA="$(path_boot_dir)"
